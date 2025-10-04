@@ -151,4 +151,6 @@
     <string name="dialog_no_notification_alert_title">未开启通知权限</string>
     <string name="open_notification_settings">打开通知设置</string>
     <string name="dont_show_again">不再提示</string>
+    <string name="network_device_info">设备信息</string>
+    <string name="view_peers">查看已连接的节点</string>
 </resources>
