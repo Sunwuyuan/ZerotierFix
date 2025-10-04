@@ -2,9 +2,9 @@ name: Build APP
 
 on:
   push:
-    branches: [ "master", "old-android" ]
+    branches: [ "main", "old-android" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
