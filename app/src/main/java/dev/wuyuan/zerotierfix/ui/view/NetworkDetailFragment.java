@@ -52,7 +52,7 @@ public class NetworkDetailFragment extends Fragment {
     private TextView dnsModeView;
     private CheckBox routeViaZtView;
     private TextView ipAddressesView;
-    private TableRow dnsView;
+    private View dnsView;
     private TextView dnsServersView;
 
 
@@ -88,7 +88,7 @@ public class NetworkDetailFragment extends Fragment {
         this.dnsModeView = view.findViewById(R.id.network_dns_mode_textview);
         this.routeViaZtView = view.findViewById(R.id.network_default_route);
         this.ipAddressesView = view.findViewById(R.id.network_ipaddresses_textview);
-        this.dnsView = view.findViewById(R.id.custom_dns_row);
+        this.dnsView = view.findViewById(R.id.custom_dns_card);
         this.dnsServersView = view.findViewById(R.id.network_dns_textview);
 
         // 设置回调
