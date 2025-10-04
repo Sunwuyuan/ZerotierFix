@@ -652,7 +652,8 @@ public class ZeroTierOneService extends VpnService implements Runnable, EventLis
             this.eventBus.post(new PeerInfoReplyEvent(null));
             return;
         }
-        this.eventBus.post(new PeerInfoReplyEvent(this.node.peers()));
+        // Pass true to include all peers (leaf nodes), not just root servers
+        this.eventBus.post(new PeerInfoReplyEvent(this.node.peers(true)));
     }
 
     /**
