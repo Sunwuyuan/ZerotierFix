@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme with dynamic color support. -->
-    <style name="Theme.ZerotierFix" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Theme.ZerotierFix" parent="Theme.Material3.DayNight">
         <!-- Enable dynamic color theming on Android 12+ -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
         <!-- Customize your theme here. -->
