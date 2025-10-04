@@ -51,26 +51,17 @@
 
                 </LinearLayout>
 
-                <!-- Networks List (hidden by default, can be shown if needed) -->
-                <LinearLayout
-                    android:id="@+id/networks_section"
+                <!-- Networks List -->
+                <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/joined_networks_list"
+                    android:name="dev.wuyuan.zerotierfix.ui.NetworkListFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <androidx.recyclerview.widget.RecyclerView xmlns:tools="http://schemas.android.com/tools"
-                        android:id="@+id/joined_networks_list"
-                        android:name="dev.wuyuan.zerotierfix.ui.NetworkListFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="false"
-                        android:paddingBottom="80dp"
-                        app:layoutManager="LinearLayoutManager"
-                        tools:context=".ui.NetworkListFragment"
-                        tools:listitem="@layout/list_item_network" />
-
-                </LinearLayout>
+                    android:clipToPadding="false"
+                    android:paddingBottom="80dp"
+                    app:layoutManager="LinearLayoutManager"
+                    tools:context=".ui.NetworkListFragment"
+                    tools:listitem="@layout/list_item_network" />
 
                 <!-- Empty state -->
                 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
