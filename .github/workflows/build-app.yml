@@ -6,9 +6,9 @@ on:
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -32,13 +32,13 @@ jobs:
       - name: Copy APK to root
         run: cp app/build/outputs/apk/debug/app-debug.apk ./app-debug.apk
       
-      - uses: actions/upload-artifact@v4
+      - name: Upload app APK
         if: github.event_name == 'pull_request'
-        name: Upload app APK
+        uses: actions/upload-artifact@v4
         with:
           name: App bundle
           path: app-debug.apk
-      # https://github.com/r0adkll/sign-android-release/issues/84#issuecomment-1889636075
+      
       - name: Setup build tool version variable
         if: github.event_name != 'pull_request'
         shell: bash
@@ -47,10 +47,10 @@ jobs:
           echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
           echo Last build tool version is: $BUILD_TOOL_VERSION
       
-      - uses: r0adkll/sign-android-release@v1
+      - name: Sign app APK
         if: github.event_name != 'pull_request'
-        name: Sign app APK
         id: sign_app
+        uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/apk/debug
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
@@ -59,9 +59,9 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
       
-      - uses: actions/upload-artifact@v4
+      - name: Upload signed app APK
         if: github.event_name != 'pull_request'
-        name: Upload signed app APK
+        uses: actions/upload-artifact@v4
         with:
           name: Signed app bundle
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
