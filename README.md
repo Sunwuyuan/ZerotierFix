@@ -23,6 +23,11 @@
 - Add custom planet config via file and URL
 - View peers list
 - Chinese translation
+- **NEW**: Material 3 UI with current network card
+- **NEW**: ZTncui integration for device management (optional)
+  - Configure ZTncui server URL, username, and password in settings
+  - View device list for connected network
+  - Manage network members remotely
 
 ## Download
 
@@ -49,4 +54,7 @@ original author is Grant Limberg (glimberg@gmail.com). See [AUTHORS.md](https://
 - [x] Replace pre-built JNI library
 - [x] Rewrite & update UI to fit Material Design
 - [x] Update UI to Material 3
+- [x] Add current network card in Material 3 style
+- [x] Add ZTncui integration support
+- [ ] Complete network switching dialog
 - [ ] *WIP* Rewrite whole APP in v2
