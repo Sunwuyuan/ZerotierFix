@@ -1,5 +1,6 @@
 package dev.wuyuan.zerotierfix.ui.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.annotation.UiThread;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButton;
 import com.zerotier.sdk.VirtualNetworkConfig;
 import com.zerotier.sdk.util.StringUtils;
 
@@ -25,6 +27,7 @@ import dev.wuyuan.zerotierfix.model.type.DNSMode;
 import dev.wuyuan.zerotierfix.model.type.NetworkStatus;
 import dev.wuyuan.zerotierfix.model.type.NetworkType;
 import dev.wuyuan.zerotierfix.ui.NetworkListFragment;
+import dev.wuyuan.zerotierfix.ui.PeerListActivity;
 import dev.wuyuan.zerotierfix.ui.viewmodel.NetworkDetailModel;
 import dev.wuyuan.zerotierfix.util.Constants;
 
@@ -94,6 +97,13 @@ public class NetworkDetailFragment extends Fragment {
         // 设置回调
         this.routeViaZtView.setOnCheckedChangeListener((buttonView, isChecked) ->
                 viewModel.doUpdateRouteViaZeroTier(isChecked));
+
+        // 设置查看节点按钮
+        MaterialButton viewPeersButton = view.findViewById(R.id.view_peers_button);
+        viewPeersButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), PeerListActivity.class);
+            startActivity(intent);
+        });
 
         // 设置对应的 UI 更新操作
         viewModel.getNetwork().observe(getViewLifecycleOwner(), this::updateNetwork);
