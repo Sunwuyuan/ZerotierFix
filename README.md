@@ -37,7 +37,7 @@ The code for this repository is based on the reverse engineering of the official
 original author is Grant Limberg (glimberg@gmail.com). See [AUTHORS.md](https://github.com/zerotier/ZeroTierOne/blob/master/AUTHORS.md#primary-authors) for more details.
 
 - Zerotier JNI Sdk is located in git submodule `externals/core`
-- Original Android client code is located in `net.kaaass.zerotierfix` (renamed from `com.zerotier.one`)
+- Original Android client code is located in `dev.wuyuan.zerotierfix` (renamed from `com.zerotier.one`)
 - App logo is a trademark of `ZeroTier, Inc.` and made by myself. 
 
 
@@ -48,4 +48,5 @@ original author is Grant Limberg (glimberg@gmail.com). See [AUTHORS.md](https://
 - [x] Support planet config
 - [x] Replace pre-built JNI library
 - [x] Rewrite & update UI to fit Material Design
+- [x] Update UI to Material 3
 - [ ] *WIP* Rewrite whole APP in v2
