@@ -21,4 +21,21 @@
             android:summary="@string/preferences_network_disable_ipv6_summary"
             android:title="@string/preferences_network_disable_ipv6" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/ztncui_settings">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="ztncui_enable"
+            android:title="@string/ztncui_enable" />
+        <EditTextPreference
+            android:key="ztncui_url"
+            android:title="@string/ztncui_url"
+            android:hint="@string/ztncui_url_hint" />
+        <EditTextPreference
+            android:key="ztncui_username"
+            android:title="@string/ztncui_username" />
+        <EditTextPreference
+            android:key="ztncui_password"
+            android:title="@string/ztncui_password"
+            android:inputType="textPassword" />
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -155,4 +155,26 @@
     <string name="dont_show_again">Don\'t show again</string>
     <string name="network_device_info">Device Information</string>
     <string name="view_peers">View Connected Peers</string>
+    
+    <!-- ztncui Integration -->
+    <string name="ztncui_settings">ZTncui Settings</string>
+    <string name="ztncui_url">ZTncui URL</string>
+    <string name="ztncui_url_hint">https://your-ztncui-server.com</string>
+    <string name="ztncui_username">Username</string>
+    <string name="ztncui_password">Password</string>
+    <string name="ztncui_enable">Enable ZTncui Integration</string>
+    <string name="ztncui_connection_error">Failed to connect to ZTncui server</string>
+    <string name="ztncui_login_success">Successfully logged in to ZTncui</string>
+    <string name="ztncui_login_failed">Failed to login to ZTncui</string>
+    <string name="device_list">Device List</string>
+    <string name="no_devices">No devices found</string>
+    <string name="refreshing">Refreshing...</string>
+    
+    <!-- Network Switching -->
+    <string name="current_network">Current Network</string>
+    <string name="no_network_connected">No network connected</string>
+    <string name="tap_to_switch">Tap to switch network</string>
+    <string name="switch_network">Switch Network</string>
+    <string name="select_network">Select Network</string>
+    <string name="add_new_network">Add New Network</string>
 </resources>
