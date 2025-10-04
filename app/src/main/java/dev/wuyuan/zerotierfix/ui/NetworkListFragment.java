@@ -34,6 +34,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.switchmaterial.SwitchMaterial;
+import android.content.SharedPreferences;
 import com.zerotier.sdk.NodeStatus;
 import com.zerotier.sdk.Version;
 
@@ -105,6 +108,12 @@ public class NetworkListFragment extends Fragment {
     private TextView nodeIdView;
     private TextView nodeStatusView;
     private TextView nodeClientVersionView;
+
+    // Current Network Card UI elements
+    private MaterialCardView currentNetworkCard;
+    private TextView currentNetworkName;
+    private TextView currentNetworkId;
+    private SwitchMaterial currentNetworkSwitch;
 
     private View emptyView = null;
     final private RecyclerView.AdapterDataObserver checkIfEmptyObserver = new RecyclerView.AdapterDataObserver() {
@@ -229,6 +238,20 @@ public class NetworkListFragment extends Fragment {
         // 空列表提示
         this.emptyView = view.findViewById(R.id.no_data);
 
+        // Current Network Card setup
+        this.currentNetworkCard = view.findViewById(R.id.current_network_card);
+        this.currentNetworkName = view.findViewById(R.id.current_network_name);
+        this.currentNetworkId = view.findViewById(R.id.current_network_id);
+        this.currentNetworkSwitch = view.findViewById(R.id.current_network_switch);
+        
+        // Setup current network card click listener
+        if (this.currentNetworkCard != null) {
+            this.currentNetworkCard.setOnClickListener(v -> {
+                // Show simple toast for now - full dialog implementation can be added later
+                Toast.makeText(getContext(), R.string.tap_to_switch, Toast.LENGTH_SHORT).show();
+            });
+        }
+
         // 列表、适配器设置
         this.recyclerView = view.findViewById(R.id.joined_networks_list);
         this.recyclerView.setClickable(true);
@@ -257,8 +280,10 @@ public class NetworkListFragment extends Fragment {
         });
 
         // 当前连接网络变更时更新列表
-        this.viewModel.getConnectNetworkId().observe(getViewLifecycleOwner(), networkId ->
-                this.recyclerViewAdapter.notifyDataSetChanged());
+        this.viewModel.getConnectNetworkId().observe(getViewLifecycleOwner(), networkId -> {
+            this.recyclerViewAdapter.notifyDataSetChanged();
+            updateCurrentNetworkCard(networkId);
+        });
 
         return view;
     }
@@ -597,7 +622,54 @@ public class NetworkListFragment extends Fragment {
     }
 
     /**
-     * 显示无通知权限的提示框。若用户选择过 “不再提示”，则此方法将不进行任何操作
+
+    /**
+     * Update the current network card UI
+     */
+    private void updateCurrentNetworkCard(Long networkId) {
+        if (this.currentNetworkName == null || this.currentNetworkId == null || this.currentNetworkSwitch == null) {
+            return; // UI not initialized yet
+        }
+        
+        if (networkId != null) {
+            // Find the connected network
+            Network connectedNetwork = null;
+            for (Network network : this.mNetworks) {
+                if (network.getNetworkId().equals(networkId)) {
+                    connectedNetwork = network;
+                    break;
+                }
+            }
+            
+            if (connectedNetwork != null) {
+                String networkName = connectedNetwork.getNetworkName();
+                if (networkName == null || networkName.isEmpty()) {
+                    networkName = getString(R.string.empty_network_name);
+                }
+                this.currentNetworkName.setText(networkName);
+                this.currentNetworkId.setText(connectedNetwork.getNetworkIdStr());
+                this.currentNetworkId.setVisibility(View.VISIBLE);
+                this.currentNetworkSwitch.setOnCheckedChangeListener(null);
+                this.currentNetworkSwitch.setChecked(true);
+                this.currentNetworkSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if (!buttonView.isPressed()) return;
+                    if (!isChecked) {
+                        // Disconnect current network
+                        this.eventBus.post(new StopEvent());
+                        this.viewModel.doChangeConnectNetwork(null);
+                    }
+                });
+                return;
+            }
+        }
+        
+        // No network connected
+        this.currentNetworkName.setText(R.string.no_network_connected);
+        this.currentNetworkId.setVisibility(View.GONE);
+        this.currentNetworkSwitch.setOnCheckedChangeListener(null);
+        this.currentNetworkSwitch.setChecked(false);
+    }
+    /** 显示无通知权限的提示框。若用户选择过 “不再提示”，则此方法将不进行任何操作
      */
     private void showNoNotificationAlertDialog() {
         // 检查是否选择过 “不再提示”，若是则不显示
