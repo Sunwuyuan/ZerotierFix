@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,39 +28,8 @@ jobs:
       - name: Build debug APK
         run: ./gradlew assembleDebug --stacktrace
       
-      - name: Copy APK to root
-        run: cp app/build/outputs/apk/debug/app-debug.apk ./app-debug.apk
-      
       - name: Upload app APK
-        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
-          name: App bundle
-          path: app-debug.apk
-      
-      - name: Setup build tool version variable
-        if: github.event_name != 'pull_request'
-        shell: bash
-        run: |
-          BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
-          echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
-          echo Last build tool version is: $BUILD_TOOL_VERSION
-      
-      - name: Sign app APK
-        if: github.event_name != 'pull_request'
-        id: sign_app
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/debug
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        env:
-          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
-      
-      - name: Upload signed app APK
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Signed app bundle
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          name: App Debug APK
+          path: app/build/outputs/apk/debug/app-debug.apk
